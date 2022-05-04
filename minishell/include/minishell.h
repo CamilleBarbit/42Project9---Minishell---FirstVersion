@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/04 14:12:45 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:39:12 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <stddef.h>
 #include <errno.h>
 #include <string.h>
+#include <signal.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../libft/include/libft.h"
@@ -36,5 +37,7 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }	t_env;
+
+void	minishell(void);
 
 #endif

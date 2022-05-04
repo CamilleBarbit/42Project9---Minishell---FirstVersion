@@ -6,21 +6,40 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 13:37:34 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/04 15:46:58 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/04 16:50:59 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+char	*line = NULL;
+
+void	sighandler(int signum)
+{
+	//char *line;
+	
+	if (signum == SIGINT)
+	{
+		rl_replace_line("", 0);
+		printf("\n");
+		rl_on_new_line();
+		rl_redisplay();
+		// signal(SIGINT, sighandler);
+		// line = readline(MINISHELL);
+		// //free(line);
+	}
+}
+
 void	minishell(void)
 {
-	char	*line;
+	//char	*line;
 	
 	while (1)
 	{
+		signal(SIGINT, sighandler);
 		line = readline(MINISHELL);
 		add_history(line);
-		// printf("%s\n", line);
+		//printf("%s\n", line);
 		if (line == NULL)
 		{
 			printf(" exit");
