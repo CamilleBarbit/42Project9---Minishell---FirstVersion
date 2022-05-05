@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-t_minishell	struct_shell;
+t_minishell	g_shell;
 
 int main(int argc, char **argv, char **env)
 {

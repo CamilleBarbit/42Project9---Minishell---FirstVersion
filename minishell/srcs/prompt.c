@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-extern t_minishell	struct_shell;
+extern t_minishell g_shell;
 
 static void	sighandler_int(int signum)
 {
@@ -37,10 +37,10 @@ void	minishell(void)
 	{
 		signal(SIGINT, sighandler_int);
 		signal(SIGQUIT, sighandler_quit);
-		struct_shell.line = readline(MINISHELL);
+		g_shell.line = readline(MINISHELL);
 		if (ft_lexer() == 0)
 			puts("a parser");
-		add_history(struct_shell.line);
-		free(struct_shell.line);
+		add_history(g_shell.line);
+		free(g_shell.line);
 	}
 }

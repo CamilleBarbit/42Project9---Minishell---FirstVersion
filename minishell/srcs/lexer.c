@@ -12,203 +12,113 @@
 
 #include "../include/minishell.h"
 
-extern t_minishell	struct_shell;
+extern t_minishell	g_shell;
 
-static int ft_lexer_quote(int i);
-static int ft_lexer_pipe(int i);
-
-static int	ft_quote_and_pipe(void)
-{
-	int	i;
-
-	i = 0;
-	while (struct_shell.line[i])
-	{
-		if (struct_shell.line[i] == '"' || struct_shell.line[i] == '\'')
-		{
-			i = t_lexer_quote(i);
-			if (i = -1)
-				return (printf("ERROR\n"), 1);
-		if (struct_shell.line[i] == '|')
-		{
-			i = ft_lexer_pipe(i);
-			if (i = -1)
-				return (printf("ERROR\n"), 1);
-		}
-		i++;
-	}
-}
-
-static int ft_lexer_quote(int i)
+static int	lexer_quote(int i)
 {
 	char	c;
 
-	c = struct_shell.line[i];
+	c = g_shell.line[i];
 	i++;
-	while (struct_shell.line[i] != c)
+	while (g_shell.line[i] != c)
 	{
-		if (!struct_shell.line[i])
-			return (printf("ERROR\n"), -1);
+		if (!g_shell.line[i])
+			return (-1);
 		i++;
 	}
-	return(i);
+	return (i);
 }
 
-
-static int ft_lexer_pipe(int i)
+static int	lexer_pipe(int i)
 {
 	int	j;
 
 	j = i;
 	while (j > 0)
 	{
-		if (struct_shell.line[j] != ' ')
-			break;
-		j--:
+		j--;
+		if (g_shell.line[j] != ' ')
+			break ;
 	}
-	if (struct_shell.line[j] == ' ' || struct_shell.line[j] == '|')
-		return (printf("ERROR\n"), 1);
+	if (g_shell.line[j] == ' ' || g_shell.line[j] == '|')
+		return (-1);
 	i++;
-	while (struct_shell.line[i])
+	while (g_shell.line[i])
 	{
-		if (struct_shell.line[i] != ' ')
-			break;
+		if (g_shell.line[i] != ' ')
+			break ;
 		i++;
 	}
-	if (!struct_shell.line[i] || struct_shell.line[i] == '|')
-		return (printf("ERROR\n"), 1);
-	struct_shell.nb_process++;
-
-
-
-
-
-
-
-
-// -------------------------------------------------------------------------------------
-
-
-/*
-
-static int ft_find_nb_proc(void)
-{
-	int i;
-
-	i = 0;
-	while (struct_shell.line[i] == '|' || struct_shell.line[i] == ' ')
-	{
-		if (struct_shell.line[i] == '|')
-			return (printf("ERROR\n"), 1);
-		i++;
-	}
-	if (!struct_shell.line[i])
-		return (2);
-	while (struct_shell.line[i] != '\0')
-	{
-        if (struct_shell.line[i] == '|')
-		{
-			while (struct_shell.line[i] == ' ' || struct_shell.line[i] == '|')
-			{
-				i++;
-				if (struct_shell.line[i] == '|' || !struct_shell.line[i])
-					return (printf("ERROR\n"), 1);
-			}
-		}
-		i++;
-	}
-	return (0);
-	
-int ft_find_nb_proc(void)
-{
-	int i;
-
-	i = 0;
-	while (struct_shell.line[i] == '|' || struct_shell.line[i] == ' ')
-	{
-		if (struct_shell.line[i] == '|')
-			return (printf("ERROR\n"), 1);
-		i++;
-	}
-	if (!struct_shell.line[i])
-		return (2);
-	while (struct_shell.line[i] != '\0')
-	{
-        if (struct_shell.line[i] == '|')
-		{
-			// struct_shell.nb_process += 1;
-			// printf("NB PROCESS: %d\n", struct_shell.nb_process);
-			while (struct_shell.line[i] == ' ' || struct_shell.line[i] == '|')
-			{
-				i++;
-				if (struct_shell.line[i] == '|' || !struct_shell.line[i])
-					return (printf("ERROR\n"), 1);
-			}
-		}
-		i++;
-	}
-	return (0);
+	g_shell.nb_process++;
+	if (!g_shell.line[i] || g_shell.line[i] == '|')
+		return (-1);
+	return (i);
 }
 
-int ft_check_quote(void)
+static int	lexer_quote_and_pipe(void)
 {
 	int	i;
 
 	i = 0;
-	while (struct_shell.line[i])
+	while (g_shell.line[i])
 	{
-		if (struct_shell.line[i] == '"')
+		if (g_shell.line[i] == '"' || g_shell.line[i] == '\'')
 		{
-			i++;
-			while (struct_shell.line[i] != '"')
-			{
-				i++;
-				if (!struct_shell.line[i])
-					return (printf("ERROR\n"), 1);
-			}
+			i = lexer_quote(i);
+			if (i == -1)
+				return (1);
 		}
-		if (struct_shell.line[i] == '\'')
+		if (g_shell.line[i] == '|')
 		{
-			i++;
-			while (struct_shell.line[i] != '\'')
-			{
-				i++;
-				if (!struct_shell.line[i])
-					return (printf("ERROR\n"), 1);
-			}
-
+			i = lexer_pipe(i);
+			if (i == -1)
+				return (2);
+			i--;
 		}
 		i++;
 	}
 	return (0);
 }
-*/
+
+static int	lexer_empty_line(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_shell.line[i] && g_shell.line[i] == ' ')
+		i++;
+	if (!g_shell.line[i])
+		return (1);
+	else
+		return (0);
+}
 
 int	ft_lexer(void)
 {
 	int return_lexer;
-	struct_shell.nb_process = 1;
 
-	if (struct_shell.line == NULL)
+	g_shell.nb_process = 1;
+	if (g_shell.line == NULL)
 	{
 		printf("exit");
-		free(struct_shell.line);
+		free(g_shell.line);
 		exit(2);
 	}
-	return_lexer = ft_find_nb_proc();
-	if (ft_check_quote() == 1)
-	{
-		printf("error with the quotes\n");
-		free(struct_shell.line);
-		exit(EXIT_FAILURE);
-	}	
+	if (lexer_empty_line() == 1)
+		return (1);
+	return_lexer = lexer_quote_and_pipe();
 	if (return_lexer == 1)
 	{
-		printf("error with the pipes\n");
-		free(struct_shell.line);
+		printf("error with the pipes quotes\n");
+		free(g_shell.line);
+		exit(EXIT_FAILURE);
+	}	
+	if (return_lexer == 2)
+	{
+		printf("error with the pipes syntax\n");
+		free(g_shell.line);
 		exit(EXIT_FAILURE);
 	}
-	if (return_lexer == 2)
-		return (1);
+	//printf("NB process: %d\n", g_shell.nb_process);
 	return (0);
 }
