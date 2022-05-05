@@ -70,7 +70,7 @@ typedef struct	s_minishell
 /* LEXER */
 
 int ft_find_nb_proc(void);
-void	ft_lexer(void);
+int	ft_lexer(void);
 
 /* FUNCTIONS */
 void	minishell(void);

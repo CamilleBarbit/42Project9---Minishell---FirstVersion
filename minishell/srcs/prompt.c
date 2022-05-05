@@ -38,7 +38,8 @@ void	minishell(void)
 		signal(SIGINT, sighandler_int);
 		signal(SIGQUIT, sighandler_quit);
 		struct_shell.line = readline(MINISHELL);
-		ft_lexer();
+		if (ft_lexer() == 0)
+			puts("a parser");
 		add_history(struct_shell.line);
 		free(struct_shell.line);
 	}
