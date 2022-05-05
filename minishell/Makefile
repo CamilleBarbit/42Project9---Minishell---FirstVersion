@@ -3,10 +3,11 @@ NAME = minishell
 
 C_FILES =	srcs/minishell.c \
 			srcs/prompt.c \
+			srcs/lexer.c \
 
 CC = cc
 
-CFLAGS = -Werror -Wall -Wextra 
+CFLAGS = -Werror -Wall -Wextra
 
 RM = rm -f
 
