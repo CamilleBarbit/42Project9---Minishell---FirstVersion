@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:41:48 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 15:48:24 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:09:24 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	ft_lexer_prompt(void)
 	{
 		printf("exit");
 		free(g_shell.line);
+		ft_free(g_shell.gc);
 		exit(2);
 	}
 	if (lexer_empty_line() == 1)

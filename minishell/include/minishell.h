@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 15:25:27 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:04:02 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct	s_process
 	t_token	*tab_token;
 }	t_process;
 
+/* ENV LISTE CHAINEE */
+
+// typedef struct s_env
+// {
+// 	char			*var;
+// 	char			*val;
+// 	struct s_env	*next;
+// }	t_env;
 
 /* MAIN STRUCTURE */
 
@@ -67,6 +75,8 @@ typedef struct	s_minishell
 	char		*line;
 	int			length_line;
 	int			tab_index_pipes[512];
+	t_gc	*gc; //garbage_collector pour collecter tout les adresses de mallocs afin de tous les free a la fin
+	t_env	*lst_env; // liste chainee dans laquelle est stockee l'env
 	t_process	*tab_proc; //de taille de nb_process
 }	t_minishell;
 
@@ -78,7 +88,16 @@ int	ft_lexer_prompt(void);
 int ft_malloc_processes(void);
 int ft_lexer(void);
 
+/* ENV */
+
+void	add_env(t_env *env, t_env *to_add);
+char	*env_dup(char *src, int size, t_gc *gc);
+t_env	*get_envlst(char *var, t_gc *gc);
+t_env	*get_env(char **env, t_gc *gc);
+void	print_env(t_env *env);
+
 /* FUNCTIONS */
+
 void	minishell(void);
 
 #endif

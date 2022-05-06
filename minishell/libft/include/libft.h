@@ -20,6 +20,17 @@
 #  define BUFFER_SIZE 2048
 # endif
 
+/* ENV LISTE CHAINEE */
+
+typedef struct s_env
+{
+	char			*var;
+	char			*val;
+	struct s_env	*next;
+}	t_env;
+
+/* GARBAGE COLLECTOR */
+
 typedef struct s_node
 {
 	void			*data;
@@ -89,9 +100,11 @@ void	ft_gcadd_back(t_gc *lst, t_gc *new);
 void	ft_gcclear(t_gc *lst);
 t_gc	*ft_gcnew(void *data, t_gc *lst);
 void	mallocreturn_failed(t_gc *gc, char *msg);
+void	*malloc_env(char *errormsg, t_gc *mallocs);
+
 
 /* 
- -init le gc avec gc = ft_nodegcnew(NULL, NULL);
+ -init le gc avec gc = ft_gcnew(NULL, NULL);
  -puis ft_malloc(type de variable, taille, msg derror,et le gc) a chaque fois que
   besoin de malloc.
  -creer des sous categorie de malloc si besoin.
