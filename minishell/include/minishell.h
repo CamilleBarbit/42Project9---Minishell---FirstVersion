@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 11:47:51 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 13:33:18 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct	s_minishell
 	int			exit;
 	int			nb_proc; //défini par le nombre de pipes dans la ligne d'entrée
 	char		*line;
-	int			*tab_index_pipes;
+	int			tab_index_pipes[512];
 	t_process	*tab_proc; //de taille de nb_process
 }	t_minishell;
 

@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 11:42:30 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 13:51:44 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int ft_lexer(void)
 		return (1);
 	if (ft_malloc_processes() == 1)
 		return (1);
+	// printf("INDEX: %d\n", g_shell.tab_index_pipes[0]);
+	// printf("INDEX: %d\n", g_shell.tab_index_pipes[1]);
+	// printf("INDEX: %d\n", g_shell.tab_index_pipes[2]);
 	return (0); //le prompt peut etre parse
 }
 
