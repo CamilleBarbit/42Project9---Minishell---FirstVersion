@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:41:48 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 13:52:01 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:48:24 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,12 @@ static int	lexer_quote(int i)
 	return (i);
 }
 
-static int	lexer_pipe(int i)
+static int	lexer_pipe(int i, int k)
 {
 	int	j;
-	static int	k = 0;
 
 	j = i;
 	g_shell.tab_index_pipes[k] = i;
-	k++;
 	while (j > 0)
 	{
 		j--;
@@ -61,8 +59,10 @@ static int	lexer_pipe(int i)
 static int	lexer_quote_and_pipe(void)
 {
 	int	i;
+	int	k;
 
 	i = 0;
+	k = 0;
 	while (g_shell.line[i])
 	{
 		if (g_shell.line[i] == '"' || g_shell.line[i] == '\'')
@@ -73,7 +73,7 @@ static int	lexer_quote_and_pipe(void)
 		}
 		if (g_shell.line[i] == '|')
 		{
-			i = lexer_pipe(i);
+			i = lexer_pipe(i, k++);
 			if (i == -1)
 				return (2);
 			i--;

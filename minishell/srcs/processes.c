@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   processes..c                                       :+:      :+:    :+:   */
+/*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 15:03:59 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 15:49:15 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,40 @@ int	ft_create_proc_str(int i)
 	size = k - j;
 	g_shell.tab_proc[i].str = malloc(sizeof(char *) * (size + 1));
 	if (!g_shell.tab_proc[i].str)
-		return (1); //erreur malloc
+		return (1); //erreur malloc -> bosser un code d'erreurs plus rode
 	while (l < size)
 	{
 		g_shell.tab_proc[i].str[l] = g_shell.line[j];
 		l++;
 		j++;
 	}
+	g_shell.tab_proc[i].str[l] = '\0';
+	return (0);
 }
 
 int	init_processes(void)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = ft_strlen(g_shell.line);
 	while (i < g_shell.nb_proc)
 	{
-		if (i = 0)
+		if (i == 0)
 			g_shell.tab_proc[i].start = 0;
 		else
 			g_shell.tab_proc[i].start = g_shell.tab_index_pipes[i - 1] + 1;
-		g_shell.tab_proc[i].end = g_shell.tab_index_pipes[i];
-		ft_create_proc_str(i);
+		if (i == (g_shell.nb_proc - 1))
+			g_shell.tab_proc[i].end = j;
+		else
+			g_shell.tab_proc[i].end = g_shell.tab_index_pipes[i];
+		if (ft_create_proc_str(i) == 1)
+			return (1);
+		printf("%s\n", g_shell.tab_proc[i].str);
+		i++;
 	}
+	return (0);
 }
 
 int ft_lexer(void)
@@ -66,10 +77,9 @@ int ft_lexer(void)
 		return (1);
 	if (ft_malloc_processes() == 1)
 		return (1);
-	// printf("INDEX: %d\n", g_shell.tab_index_pipes[0]);
-	// printf("INDEX: %d\n", g_shell.tab_index_pipes[1]);
-	// printf("INDEX: %d\n", g_shell.tab_index_pipes[2]);
+	if (init_processes() == 1)
+		return (1);
+	printf("INDEX PIPE: %d\n", g_shell.tab_index_pipes[0]);
+	printf("INDEX PIPE: %d\n", g_shell.tab_index_pipes[1]);
 	return (0); //le prompt peut etre parse
 }
-
-
