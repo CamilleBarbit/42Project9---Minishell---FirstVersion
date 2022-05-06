@@ -6,7 +6,7 @@
 #    By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/06 11:28:34 by cbarbit           #+#    #+#              #
-#    Updated: 2022/05/06 11:28:37 by cbarbit          ###   ########.fr        #
+#    Updated: 2022/05/06 14:44:36 by cbarbit          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 C_FILES =	srcs/minishell.c \
 			srcs/prompt.c \
 			srcs/lexer.c \
-			srcs/token.c \
+			srcs/processes.c \
 
 CC = cc
 

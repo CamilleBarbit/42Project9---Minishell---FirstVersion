@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 13:33:18 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 14:48:03 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_token
 typedef struct	s_process
 {
 	char	*str;
+	int		i_start;
+	int		i_end;
 	char	*path; //path de la commande?
 	int		in_fd;
 	int		out_fd;
@@ -60,7 +62,7 @@ typedef struct	s_process
 
 typedef struct	s_minishell
 {
-	int			exit;
+	//int			exit;
 	int			nb_proc; //défini par le nombre de pipes dans la ligne d'entrée
 	char		*line;
 	int			tab_index_pipes[512];
