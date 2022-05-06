@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/05 15:20:52 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 11:47:51 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 typedef struct s_token
 {
 	char	*word;
-	int		type;
+	int		type; //faire un enum pour le type de chaque mot
 }	t_token;
 
 /* PROCESS DATA STRUCTURE */
@@ -61,16 +61,19 @@ typedef struct	s_process
 typedef struct	s_minishell
 {
 	int			exit;
-	int			nb_process; //défini par le nombre de pipes dans la ligne d'entrée
+	int			nb_proc; //défini par le nombre de pipes dans la ligne d'entrée
 	char		*line;
-	t_process	*tab_process; //de taille de nb_process
+	int			*tab_index_pipes;
+	t_process	*tab_proc; //de taille de nb_process
 }	t_minishell;
 
 
 /* LEXER */
 
 int ft_find_nb_proc(void);
-int	ft_lexer(void);
+int	ft_lexer_prompt(void);
+int ft_malloc_processes(void);
+int ft_lexer(void);
 
 /* FUNCTIONS */
 void	minishell(void);
