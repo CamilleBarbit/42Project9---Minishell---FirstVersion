@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:30:17 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 11:39:06 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/09 14:15:29 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-extern t_minishell g_shell;
+extern t_minishell	g_shell;
 
 static void	sighandler_int(int signum)
 {
@@ -28,7 +28,7 @@ static void	sighandler_int(int signum)
 static void	sighandler_quit(int signum)
 {
 	(void)signum;
-	return;
+	return ;
 }
 
 void	minishell(void)
@@ -38,6 +38,12 @@ void	minishell(void)
 		signal(SIGINT, sighandler_int);
 		signal(SIGQUIT, sighandler_quit);
 		g_shell.line = readline(MINISHELL);
+		if (ft_strcmp(g_shell.line, "exit"))
+		{
+			free(g_shell.line);
+			ft_free(g_shell.gc);
+			exit (0);
+		}	
 		if (ft_lexer() == 0)
 			puts("a parser");
 		add_history(g_shell.line);

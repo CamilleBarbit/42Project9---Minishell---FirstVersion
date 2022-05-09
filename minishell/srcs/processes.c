@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 15:49:15 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/09 17:00:01 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,48 @@ int	ft_create_proc_str(int i)
 	return (0);
 }
 
+static void	strlentoken(int j)
+{
+	int i;
+	
+	i = 0;
+	g_shell.tab_proc[j].nb_tokens = 0;
+	while(g_shell.tab_proc[j].str[i])
+	{
+		while (g_shell.tab_proc[j].str[i] == ' ')
+		{
+			i++;
+			if (!g_shell.tab_proc[j].str[i])
+				return ;
+		}
+		while (g_shell.tab_proc[j].str[i] != ' ' && g_shell.tab_proc[j].str[i] != '\0')
+		{
+			if (g_shell.tab_proc[j].str[i] == '"')
+			{
+				i++;
+				while (g_shell.tab_proc[j].str[i] != '"')
+				{
+					i++;
+					if (g_shell.tab_proc[j].str[i] == '"')
+						break;
+				}
+			}
+			if (g_shell.tab_proc[j].str[i] == '\'')
+			{
+				i++;
+				while (g_shell.tab_proc[j].str[i] != '\'')
+				{
+					i++;
+					if (g_shell.tab_proc[j].str[i] == '\'')
+						break;
+				}
+			}
+			i++;
+		}
+		g_shell.tab_proc[j].nb_tokens++;
+	}
+}
+
 int	init_processes(void)
 {
 	int	i;
@@ -65,7 +107,8 @@ int	init_processes(void)
 			g_shell.tab_proc[i].end = g_shell.tab_index_pipes[i];
 		if (ft_create_proc_str(i) == 1)
 			return (1);
-		printf("%s\n", g_shell.tab_proc[i].str);
+		strlentoken(i);	
+		printf("NB TOKEN: %d\n", g_shell.tab_proc[i].nb_tokens);
 		i++;
 	}
 	return (0);
