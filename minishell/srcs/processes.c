@@ -6,7 +6,7 @@
 /*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/09 17:00:01 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:04:47 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,9 @@ int	init_processes(void)
 {
 	int	i;
 	int	j;
+	int index;
 
+	index = 0;
 	i = 0;
 	j = ft_strlen(g_shell.line);
 	while (i < g_shell.nb_proc)
@@ -107,12 +109,54 @@ int	init_processes(void)
 			g_shell.tab_proc[i].end = g_shell.tab_index_pipes[i];
 		if (ft_create_proc_str(i) == 1)
 			return (1);
-		strlentoken(i);	
 		printf("NB TOKEN: %d\n", g_shell.tab_proc[i].nb_tokens);
 		i++;
 	}
 	return (0);
 }
+
+// int	malloctoken(int index, char	*str)
+// {
+// 	int	count;
+
+// 	count = 0;
+// 	while (str[index] = ' ')
+// 		index++;
+// 	while(str[index] && str[index] != ' ')
+// 	{
+// 		if (str[index] == '$')
+// 			count += ft_gestion$();
+// 		else if (g_shell.tab_proc[j].str[i] == '"')
+// 			{
+// 				index++;
+// 				while (g_shell.tab_proc[j].str[i] != '"')
+// 				{
+// 					if (str[index] == '$')
+// 						count += ft_gestion$();
+// 					index++;
+// 					if (g_shell.tab_proc[j].str[i] == '"')
+// 						break;
+// 					count++;
+// 				}
+// 			}
+// 		else if (g_shell.tab_proc[j].str[i] == '\'')
+// 			{
+// 				i++;
+// 				while (g_shell.tab_proc[j].str[i] != '\'')
+// 				{
+// 					i++;
+// 					if (g_shell.tab_proc[j].str[i] == '\'')
+// 						break;
+// 					count++;
+// 				}
+// 			}
+// 		else
+// 		{
+// 			index++;
+// 			count++;
+// 		}
+// 	}
+// }
 
 int ft_lexer(void)
 {
@@ -122,7 +166,9 @@ int ft_lexer(void)
 		return (1);
 	if (init_processes() == 1)
 		return (1);
+	(void)strlentoken(0);
 	printf("INDEX PIPE: %d\n", g_shell.tab_index_pipes[0]);
 	printf("INDEX PIPE: %d\n", g_shell.tab_index_pipes[1]);
+	
 	return (0); //le prompt peut etre parse
 }
