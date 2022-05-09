@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+         #
+#    By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/06 11:28:34 by cbarbit           #+#    #+#              #
-#    Updated: 2022/05/06 14:44:36 by cbarbit          ###   ########.fr        #
+#    Updated: 2022/05/06 19:03:12 by aboudjel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,11 @@ C_FILES =	srcs/minishell.c \
 			srcs/prompt.c \
 			srcs/lexer.c \
 			srcs/processes.c \
+			srcs/env_lst.c
 
 CC = cc
 
-CFLAGS = -Werror -Wall -Wextra
+CFLAGS = -Werror -Wall -Wextra -g
 
 RM = rm -f
 
@@ -32,7 +33,7 @@ all: ${NAME}
 
 ${NAME} : ${O_FILES}
 	@${MAKE} -C libft
-	@${CC} ${O_FILES} -lreadline libft/libft.a -o ${NAME}
+	@${CC} ${O_FILES} -lreadline libft/libft.a -g -o ${NAME}
 
 
 clean:

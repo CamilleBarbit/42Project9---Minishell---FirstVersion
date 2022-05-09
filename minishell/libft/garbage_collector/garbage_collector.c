@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:46:19 by aboudjel          #+#    #+#             */
-/*   Updated: 2022/05/04 14:40:27 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/06 19:06:23 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	*ft_malloc(char *type, int size, char *msg, t_gc *lst)
 		return (malloc_int(size, msg, mallocs));
 	if (ft_strcmp(type, "tabstr"))
 		return (malloc_int(size, msg, mallocs));
+	if (ft_strcmp(type, "env"))
+		return (malloc_env(msg, mallocs));
 	else
 		return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:41:48 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 15:48:24 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/09 15:30:07 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	lexer_quote_and_pipe(void)
 	return (0);
 }
 
-static int	lexer_empty_line(void) //line with empty space or empty line (with \0)
+static int	lexer_empty_line(void)
 {
 	int	i;
 
@@ -94,31 +94,29 @@ static int	lexer_empty_line(void) //line with empty space or empty line (with \0
 		return (1);
 	else
 		return (0);
-}
+}	
 
 int	ft_lexer_prompt(void)
 {
-	int return_lexer;
+	int	return_lexer;
 
 	g_shell.nb_proc = 1;
-	if (g_shell.line == NULL) //le pointeur est NULL
+	if (g_shell.line == NULL)
 	{
 		printf("exit");
 		free(g_shell.line);
+		ft_free(g_shell.gc);
 		exit(2);
 	}
 	if (lexer_empty_line() == 1)
 		return (1);
 	return_lexer = lexer_quote_and_pipe();
-	if (return_lexer == 1)
+	if (return_lexer == 1 || return_lexer == 2)
 	{
-		printf("error with the pipes quotes\n");
-		free(g_shell.line);
-		exit(1);
-	}	
-	if (return_lexer == 2)
-	{
-		printf("error with the pipes syntax\n");
+		if (return_lexer == 1)
+			printf("error with the quotes syntax\n");
+		if (return_lexer == 2)
+			printf("error with the pipes syntax\n");
 		free(g_shell.line);
 		exit(1);
 	}
