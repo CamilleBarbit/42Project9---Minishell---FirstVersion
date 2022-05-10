@@ -6,7 +6,7 @@
 /*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/10 15:40:12 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/10 16:22:33 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,13 @@ int ft_gestion_var(int i, char *str)
 	t_env	*temp;
 	
 	g_shell.tab_proc[i].index++;
-	// printf(" ft_gestion_var index = %c %d\n", str[g_shell.tab_proc[i].index], g_shell.tab_proc[i].index);
+	printf(" ft_gestion_var index = %c %d\n", str[g_shell.tab_proc[i].index], g_shell.tab_proc[i].index);
 	j = g_shell.tab_proc[i].index;
-	while(str[g_shell.tab_proc[i].index] && str[g_shell.tab_proc[i].index] != '"' && str[g_shell.tab_proc[i].index] != ' ' 
-		&& str[g_shell.tab_proc[i].index] != '\'' && str[g_shell.tab_proc[i].index] != '$')
+	if (ft_isalpha(str[g_shell.tab_proc[i].index]) == 1 && str[g_shell.tab_proc[i].index] != '_')
+		return (1);
+	g_shell.tab_proc[i].index++;
+	printf(" ft_gestion_var index = %c %d\n", str[g_shell.tab_proc[i].index], g_shell.tab_proc[i].index);
+	while (ft_isalnum(str[g_shell.tab_proc[i].index]) == 0 || str[g_shell.tab_proc[i].index] == '_')
 		g_shell.tab_proc[i].index++;
 	// printf(" ft_gestion_var index = %d\n", g_shell.tab_proc[i].index);
 	temp = g_shell.lst_env;
@@ -188,7 +191,6 @@ int	malloctoken(int i, char	*str)
 	while(str[g_shell.tab_proc[i].index] && str[g_shell.tab_proc[i].index] != ' ')
 	{
 		if (str[g_shell.tab_proc[i].index] == '$')
-		{	if ()
 			count += ft_gestion_var(i, str);
 		else if (str[g_shell.tab_proc[i].index] == '"')
 			{
