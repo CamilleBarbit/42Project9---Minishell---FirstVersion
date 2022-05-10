@@ -6,13 +6,15 @@
 /*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 11:28:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/09 18:04:47 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/10 15:40:12 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
 extern t_minishell	g_shell;
+
+static void	strlentoken(int j);
 
 int ft_malloc_processes(void)
 {
@@ -22,9 +24,10 @@ int ft_malloc_processes(void)
 	return (0);
 }
 
+int	malloctoken(int i, char	*str);
+
 int	ft_create_proc_str(int i)
 {
-	int	size;
 	int	j;
 	int	k;
 	int	l;
@@ -32,17 +35,27 @@ int	ft_create_proc_str(int i)
 	j = g_shell.tab_proc[i].start;
 	k = g_shell.tab_proc[i].end;
 	l = 0;
-	size = k - j;
-	g_shell.tab_proc[i].str = malloc(sizeof(char *) * (size + 1));
+	g_shell.tab_proc[i].strlen = k - j;
+	g_shell.tab_proc[i].index = 0;
+	g_shell.tab_proc[i].str = malloc(sizeof(char *) * (g_shell.tab_proc[i].strlen + 1)); //securiser gc_2;
 	if (!g_shell.tab_proc[i].str)
 		return (1); //erreur malloc -> bosser un code d'erreurs plus rode
-	while (l < size)
+	while (l < g_shell.tab_proc[i].strlen)
 	{
 		g_shell.tab_proc[i].str[l] = g_shell.line[j];
 		l++;
 		j++;
 	}
 	g_shell.tab_proc[i].str[l] = '\0';
+	strlentoken(i);
+	g_shell.tab_proc[i].tab_token = malloc(sizeof(t_token) * g_shell.tab_proc[i].nb_tokens); //securiser gc_2;
+	l = 0;
+	while (l < g_shell.tab_proc[i].nb_tokens)
+	{
+		printf("taille malloc process[%d][%d] : %d \n", i, l, malloctoken(i, g_shell.tab_proc[i].str));
+		// g_shell.tab_proc[i].tab_token[l].word = malloc(sizeof(char *) * (malloctoken(i, g_shell.tab_proc[i].str) + 1));
+		l++;
+	}
 	return (0);
 }
 
@@ -115,48 +128,104 @@ int	init_processes(void)
 	return (0);
 }
 
-// int	malloctoken(int index, char	*str)
-// {
-// 	int	count;
+int	val_strncmp(char *stra, char *val, int length)
+{
+	int		i;
+	char	*str1;
+	char	*str2;
 
-// 	count = 0;
-// 	while (str[index] = ' ')
-// 		index++;
-// 	while(str[index] && str[index] != ' ')
-// 	{
-// 		if (str[index] == '$')
-// 			count += ft_gestion$();
-// 		else if (g_shell.tab_proc[j].str[i] == '"')
-// 			{
-// 				index++;
-// 				while (g_shell.tab_proc[j].str[i] != '"')
-// 				{
-// 					if (str[index] == '$')
-// 						count += ft_gestion$();
-// 					index++;
-// 					if (g_shell.tab_proc[j].str[i] == '"')
-// 						break;
-// 					count++;
-// 				}
-// 			}
-// 		else if (g_shell.tab_proc[j].str[i] == '\'')
-// 			{
-// 				i++;
-// 				while (g_shell.tab_proc[j].str[i] != '\'')
-// 				{
-// 					i++;
-// 					if (g_shell.tab_proc[j].str[i] == '\'')
-// 						break;
-// 					count++;
-// 				}
-// 			}
-// 		else
-// 		{
-// 			index++;
-// 			count++;
-// 		}
-// 	}
-// }
+	str1 = stra;
+	str2 = val;
+	i = 0;
+	while (length > i && (str1[i] || str2[i]))
+	{
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
+	}
+	if (!str2[i])
+		return (0);
+	else
+		return (1);
+}
+
+int ft_gestion_var(int i, char *str)
+{
+	int		j;
+	int		k;
+	t_env	*temp;
+	
+	g_shell.tab_proc[i].index++;
+	// printf(" ft_gestion_var index = %c %d\n", str[g_shell.tab_proc[i].index], g_shell.tab_proc[i].index);
+	j = g_shell.tab_proc[i].index;
+	while(str[g_shell.tab_proc[i].index] && str[g_shell.tab_proc[i].index] != '"' && str[g_shell.tab_proc[i].index] != ' ' 
+		&& str[g_shell.tab_proc[i].index] != '\'' && str[g_shell.tab_proc[i].index] != '$')
+		g_shell.tab_proc[i].index++;
+	// printf(" ft_gestion_var index = %d\n", g_shell.tab_proc[i].index);
+	temp = g_shell.lst_env;
+	while (temp)
+	{
+		k = val_strncmp((str + j), temp->var, (g_shell.tab_proc[i].index - j));
+
+		if (k == 0)
+		{
+			k = ft_strlen(temp->val);
+			// printf(" ft_gestion_var = %d\n", k);
+			return (k);
+		}
+		temp = temp->next;
+	}
+	return (0);
+}
+
+int	malloctoken(int i, char	*str)
+{
+	int	count;
+
+	count = 0;
+	while (str[g_shell.tab_proc[i].index] == ' ')
+		g_shell.tab_proc[i].index++;
+	while(str[g_shell.tab_proc[i].index] && str[g_shell.tab_proc[i].index] != ' ')
+	{
+		if (str[g_shell.tab_proc[i].index] == '$')
+		{	if ()
+			count += ft_gestion_var(i, str);
+		else if (str[g_shell.tab_proc[i].index] == '"')
+			{
+				// puts("lol");
+				g_shell.tab_proc[i].index++;
+				// printf("index = %d\n", g_shell.tab_proc[i].index);
+				while (str[g_shell.tab_proc[i].index] != '"')
+				{
+					// printf("indexxxxxxxxxxxxxxxxxxxxx = %d\n", g_shell.tab_proc[i].index);
+					if (str[g_shell.tab_proc[i].index] == '$')
+						count += ft_gestion_var(i, str);
+					else
+					{
+						count++;
+						g_shell.tab_proc[i].index++;
+					}
+				}
+				g_shell.tab_proc[i].index++;
+			}
+		else if (str[g_shell.tab_proc[i].index] == '\'')
+			{
+				g_shell.tab_proc[i].index++;
+				while (str[g_shell.tab_proc[i].index] != '\'')
+				{
+					count++;
+					g_shell.tab_proc[i].index++;
+				}
+				g_shell.tab_proc[i].index++;
+			}
+		else
+		{
+			g_shell.tab_proc[i].index++;
+			count++;
+		}
+	}
+	return(count);
+}
 
 int ft_lexer(void)
 {
