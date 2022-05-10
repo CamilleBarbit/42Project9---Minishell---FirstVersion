@@ -6,7 +6,7 @@
 /*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/06 19:04:02 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:21:19 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ typedef struct s_token
 typedef struct	s_process
 {
 	char	*str;
+	int		strlen;
 	int		start;
 	int		end;
+	int		index;
 	char	*path; //path de la commande?
 	int		in_fd;
 	int		out_fd;
