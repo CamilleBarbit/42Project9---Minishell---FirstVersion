@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mallocs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:44:28 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/11 16:36:41 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/11 20:08:55 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@ int malloc_processes(void)
 {
 	g_shell.tab_proc = malloc(sizeof(t_process) * (g_shell.nb_proc + 1)); //necessary the +1?
 	if (!g_shell.tab_proc)
-		return (1);
+		mallocreturn_failed(g_shell.gc2, "t_process malloc failed");
+	else
+		ft_gcadd_back(g_shell.gc2, ft_gcnew(g_shell.tab_proc,g_shell.gc2));
 	return (0);
 }
 
 int	malloc_tokens(int i, int j)
 {
-	g_shell.tab_proc[i].tab_token[j].word = malloc(sizeof(char *) * (g_shell.tab_proc[i].tab_token[j].word_malloc_count + 1));
-	if (!g_shell.tab_proc[i].tab_token[j].word)
-		return (1);
+	g_shell.tab_proc[i].tab_token[j].word = ft_malloc("str", g_shell.tab_proc[i].tab_token[j].word_malloc_count," word token malloc failed", g_shell.gc2);
+	// malloc(sizeof(char *) * (g_shell.tab_proc[i].tab_token[j].word_malloc_count + 1));
+	// if (!g_shell.tab_proc[i].tab_token[j].word)
+	// 	return (1);
 //	printf("malloc worked\n");
 	return (0);	
 }

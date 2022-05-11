@@ -1,0 +1,4 @@
+lol lol
+salut | "dsdsd" "$USER"
+exit
+exit
