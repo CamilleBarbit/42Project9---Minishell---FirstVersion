@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:44:28 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/11 15:00:03 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/11 16:36:41 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	malloc_tokens(int i, int j)
 	g_shell.tab_proc[i].tab_token[j].word = malloc(sizeof(char *) * (g_shell.tab_proc[i].tab_token[j].word_malloc_count + 1));
 	if (!g_shell.tab_proc[i].tab_token[j].word)
 		return (1);
+//	printf("malloc worked\n");
 	return (0);	
 }
 

@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:07:22 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/11 14:54:40 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/11 17:47:28 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	find_nb_tokens(int j)
 			}
 			i++;
 		}
-		g_shell.tab_proc[j].nb_tokens++; //recupere le nb de tokens pour chaque processus -> pour malloc la bonne taille de tab_token
+		g_shell.tab_proc[j].nb_tokens++;
 	}
 }
 
@@ -65,15 +65,23 @@ int init_tokens(void)
 	while (i < g_shell.nb_proc)
 	{
 		j = 0;
+		g_shell.tab_proc[i].index = 0;
 		while (j < g_shell.tab_proc[i].nb_tokens)
 		{
-			//g_shell.tab_proc[i].tab_token[j].word_malloc_count = malloc_tokens(i, g_shell.tab_proc[i].str);
-			//printf("Taille malloc token[index_du_process: %d][index_du_token: %d] : %d\n", i, j, malloc_tokens(i, g_shell.tab_proc[i].str));
-			//g_shell.tab_proc[i].tab_token[j].word = malloc(sizeof(char *) * (malloc_tokens(i, g_shell.tab_proc[i].str) + 1));
+		
 			size_malloc_tokens(i, j, g_shell.tab_proc[i].str);
-			printf("Taille malloc token[index_du_process: %d][index_du_token: %d] : %d\n", i, j, g_shell.tab_proc[i].tab_token[j].word_malloc_count);
 			if (malloc_tokens(i, j) == 1)
 				return (1);
+			j++;
+		}
+		j = 0;
+		g_shell.tab_proc[i].index = 0;
+		while (j < g_shell.tab_proc[i].nb_tokens)
+		{
+			copy_token(i, j, g_shell.tab_proc[i].str);
+			printf("INDEX PROC : %d\n", i);
+			printf("INDEX TOKEN : %d\n", j);
+			printf("STRING %s\n", g_shell.tab_proc[i].tab_token[j].word);
 			j++;
 		}
 		i++;

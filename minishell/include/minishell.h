@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/11 14:50:39 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/11 16:13:16 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct	s_minishell
 	int			length_line;
 	int			tab_index_pipes[512];
 	t_gc		*gc; //garbage_collector pour collecter tout les adresses de mallocs afin de tous les free a la fin
+	t_gc		*gc2;
 	t_env		*lst_env; // liste chainee dans laquelle est stockee l'env
 	t_process	*tab_proc; //de taille de nb_process
 }	t_minishell;
@@ -102,7 +103,9 @@ int 	lexer(void);
 int		init_processes(void);
 int 	init_tokens(void);
 int 	gestion_var_size(int i, char *str);
+int		val_strncmp(char *stra, char *val, int length);
 void	find_nb_tokens(int j);
+void	copy_token(int i, int j, char *str);
 
 /* ENV */
 
