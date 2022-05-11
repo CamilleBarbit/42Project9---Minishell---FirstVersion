@@ -6,7 +6,7 @@
 /*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/10 13:21:19 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:15:40 by aboudjel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_process
 	int		start;
 	int		end;
 	int		index;
+	int		index2;
 	char	*path; //path de la commande?
 	int		in_fd;
 	int		out_fd;
