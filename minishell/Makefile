@@ -6,7 +6,7 @@
 #    By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/06 11:28:34 by cbarbit           #+#    #+#              #
-#    Updated: 2022/05/11 16:14:02 by cbarbit          ###   ########.fr        #
+#    Updated: 2022/05/16 17:56:52 by cbarbit          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ C_FILES =	srcs/minishell.c \
 			srcs/signals_handlers.c \
 			srcs/init_tokens.c \
 			srcs/copy_tokens.c \
-			srcs/manage_tokens.c			
+			srcs/manage_tokens.c \
+			srcs/builtins.c			
 
 CC = cc
 
