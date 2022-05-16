@@ -1,7 +1,0 @@
-token par token 
-
-> 
-<
-debut dun token " et tant qunaud il rencontre le deuxieme " cest le meme token
-
-FILE_OUT_SUR append

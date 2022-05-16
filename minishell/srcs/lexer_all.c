@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_all.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 13:41:48 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/09 15:30:07 by aboudjel         ###   ########.fr       */
+/*   Updated: 2022/05/10 17:05:32 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	lexer_empty_line(void)
 		return (0);
 }	
 
-int	ft_lexer_prompt(void)
+int	lexer_prompt(void)
 {
 	int	return_lexer;
 
@@ -117,7 +117,7 @@ int	ft_lexer_prompt(void)
 			printf("error with the quotes syntax\n");
 		if (return_lexer == 2)
 			printf("error with the pipes syntax\n");
-		free(g_shell.line);
+		free(g_shell.line); //on ne free pas g_shell.gc?
 		exit(1);
 	}
 	return (0);

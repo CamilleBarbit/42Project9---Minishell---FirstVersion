@@ -3,20 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aboudjel <aboudjel@student.42.fr>          +#+  +:+       +#+         #
+#    By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/06 11:28:34 by cbarbit           #+#    #+#              #
-#    Updated: 2022/05/06 19:03:12 by aboudjel         ###   ########.fr        #
+#    Updated: 2022/05/11 16:14:02 by cbarbit          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 C_FILES =	srcs/minishell.c \
-			srcs/prompt.c \
-			srcs/lexer.c \
+			srcs/lexer_all.c \
 			srcs/processes.c \
-			srcs/env_lst.c
+			srcs/env_lst.c \
+			srcs/mallocs.c \
+			srcs/signals_handlers.c \
+			srcs/init_tokens.c \
+			srcs/copy_tokens.c \
+			srcs/manage_tokens.c			
 
 CC = cc
 
