@@ -6,7 +6,7 @@
 /*   By: cbarbit <cbarbit@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 12:09:51 by cbarbit           #+#    #+#             */
-/*   Updated: 2022/05/11 16:13:16 by cbarbit          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:23:49 by cbarbit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,18 @@ typedef struct	s_process
 	t_token	*tab_token;
 }	t_process;
 
-/* ENV LISTE CHAINEE */
+/* TOKEN TYPES */
 
-// typedef struct s_env
-// {
-// 	char			*var;
-// 	char			*val;
-// 	struct s_env	*next;
-// }	t_env;
+typedef enum	e_toke_types
+{
+	builtin,
+	command,
+	word,
+	infile,
+	heredoc,
+	outfile,
+	separator,
+}	t_token_types;
 
 /* MAIN STRUCTURE */
 
